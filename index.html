@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ГЛАДЬ — прокат сапбордов</title>
+<meta name="description" content="Прокат сапбордов на озере: почасовая аренда, прогулки с инструктором и закатные туры.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#0b3a53; --sea:#0f6e8c; --aqua:#2bb3c0; --foam:#e9f7f8;
+    --coral:#ff6b4a; --coral-d:#e8552f; --text:#14303f; --muted:#5b7684;
+    --bg:#ffffff; --card:#ffffff; --line:#d7e8ec; --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Manrope,system-ui,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+  a{color:inherit}
+  img,svg{display:block}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  section{padding:84px 0}
+  h1,h2,h3{line-height:1.15;color:var(--deep)}
+  h2{font-size:clamp(28px,4vw,40px);font-weight:800;margin-bottom:12px}
+  .lead{color:var(--muted);font-size:18px;max-width:620px;margin-bottom:40px}
+  .btn{display:inline-block;background:var(--coral);color:#fff;text-decoration:none;font-weight:800;
+       padding:14px 26px;border-radius:999px;border:0;cursor:pointer;font:inherit;font-weight:800;transition:.2s}
+  .btn:hover{background:var(--coral-d);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;border:2px solid currentColor}
+
+  /* header */
+  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+  .logo{font-weight:800;font-size:22px;letter-spacing:.08em;color:var(--deep);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .logo span{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--aqua),var(--sea))}
+  .menu{display:flex;gap:24px;list-style:none}
+  .menu a{text-decoration:none;font-weight:600;color:var(--muted)}
+  .menu a:hover{color:var(--sea)}
+  .nav .btn{padding:10px 20px}
+  .burger{display:none;background:none;border:0;font-size:28px;cursor:pointer;color:var(--deep)}
+
+  /* hero */
+  .hero{position:relative;background:linear-gradient(160deg,var(--deep) 0%,var(--sea) 55%,var(--aqua) 100%);color:#fff;padding:96px 0 150px;overflow:hidden}
+  .hero h1{color:#fff;font-size:clamp(40px,7vw,76px);font-weight:800;max-width:720px}
+  .hero p{font-size:20px;max-width:540px;margin:20px 0 34px;opacity:.92}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .facts{display:flex;gap:36px;margin-top:56px;flex-wrap:wrap}
+  .facts b{display:block;font-size:28px}
+  .facts small{opacity:.8}
+  .sun{position:absolute;right:8%;top:70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#ffd29a,#ff9f6e 60%,transparent 70%);opacity:.75}
+  .wave{position:absolute;left:0;right:0;bottom:-1px}
+
+  /* features */
+  .grid{display:grid;gap:22px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+  .ico{width:52px;height:52px;border-radius:14px;background:var(--foam);display:grid;place-items:center;font-size:26px;margin-bottom:16px}
+  .card h3{font-size:19px;margin-bottom:8px}
+  .card p{color:var(--muted)}
+
+  /* prices */
+  .prices{background:var(--foam)}
+  .price{position:relative;display:flex;flex-direction:column}
+  .price .sum{font-size:34px;font-weight:800;color:var(--sea);margin:10px 0 4px}
+  .price .per{color:var(--muted);margin-bottom:16px}
+  .price ul{list-style:none;margin-bottom:24px;flex:1}
+  .price li{padding:6px 0 6px 26px;position:relative}
+  .price li::before{content:"✓";position:absolute;left:0;color:var(--aqua);font-weight:800}
+  .price .btn{text-align:center}
+  .price.hot{border:2px solid var(--coral);box-shadow:0 18px 40px -20px rgba(255,107,74,.6)}
+  .tag{position:absolute;top:-13px;left:24px;background:var(--coral);color:#fff;font-size:13px;font-weight:800;padding:4px 12px;border-radius:999px}
+
+  /* calc */
+  .calc{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;margin-top:48px;background:#fff;border-radius:var(--radius);padding:32px;border:1px solid var(--line)}
+  .calc h3{font-size:24px;margin-bottom:18px}
+  label{display:block;font-weight:600;margin-bottom:6px;font-size:15px}
+  .field{margin-bottom:18px}
+  input,select,textarea{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text)}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--aqua);border-color:transparent}
+  input[type=range]{padding:0;accent-color:var(--sea)}
+  .total{background:linear-gradient(160deg,var(--deep),var(--sea));color:#fff;border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;justify-content:center}
+  .total small{opacity:.8}
+  .total b{font-size:48px;display:block;margin:6px 0 16px}
+  .total .note{font-size:14px;opacity:.85;margin-bottom:18px}
+
+  /* routes */
+  .route{overflow:hidden;padding:0}
+  .route .pic{height:170px}
+  .route .body{padding:24px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .pill{font-size:13px;font-weight:600;background:var(--foam);color:var(--sea);padding:5px 12px;border-radius:999px}
+
+  /* steps */
+  .steps{counter-reset:s}
+  .step{counter-increment:s}
+  .step::before{content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:20px;margin-bottom:16px}
+
+  /* faq */
+  .faq{background:var(--foam)}
+  details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-bottom:12px}
+  summary{font-weight:800;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;color:var(--deep)}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:24px;line-height:1;color:var(--sea);transition:.2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{margin-top:12px;color:var(--muted)}
+
+  /* booking */
+  .booking .box{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:start}
+  .form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:32px;box-shadow:0 30px 60px -40px rgba(11,58,83,.5)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form .btn{width:100%;margin-top:6px}
+  .ok{display:none;text-align:center;padding:30px 10px}
+  .ok b{font-size:48px;display:block}
+  .contacts p{margin-bottom:10px}
+  .contacts a{color:var(--sea);font-weight:600;text-decoration:none}
+
+  footer{background:var(--deep);color:#cfe6ec;padding:40px 0;font-size:15px}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .disclaimer{opacity:.6;font-size:13px;margin-top:8px}
+
+  @media (max-width:900px){
+    .g4{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:1fr}
+    .calc,.booking .box{grid-template-columns:1fr}
+    .menu{display:none;position:absolute;top:68px;left:0;right:0;background:#fff;flex-direction:column;gap:0;border-bottom:1px solid var(--line)}
+    .menu.open{display:flex}
+    .menu a{display:block;padding:14px 20px}
+    .burger{display:block}
+    .nav .btn{display:none}
+    .sun{width:140px;height:140px;right:-20px}
+  }
+  @media (max-width:560px){
+    section{padding:60px 0}
+    .g4{grid-template-columns:1fr}
+    .row{grid-template-columns:1fr}
+    .hero{padding:64px 0 120px}
+    .calc,.form{padding:22px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><span></span>ГЛАДЬ</a>
+    <ul class="menu" id="menu">
+      <li><a href="#prices">Тарифы</a></li>
+      <li><a href="#routes">Маршруты</a></li>
+      <li><a href="#how">Как это работает</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#booking">Контакты</a></li>
+    </ul>
+    <a href="#booking" class="btn">Забронировать</a>
+    <button class="burger" id="burger" aria-label="Меню">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="sun"></div>
+  <div class="wrap" style="position:relative">
+    <h1>Встань на воду</h1>
+    <p>Прокат сапбордов на Тихом озере. Это проще, чем кажется — встанете с первого раза, а инструктор поможет.</p>
+    <div class="actions">
+      <a href="#booking" class="btn">Забронировать доску</a>
+      <a href="#prices" class="btn ghost">Смотреть цены</a>
+    </div>
+    <div class="facts">
+      <div><b>15 минут</b><small>и вы уверенно гребёте</small></div>
+      <div><b>Жилеты</b><small>и инструктаж бесплатно</small></div>
+      <div><b>от 600 ₽</b><small>за час катания</small></div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" height="90" width="100%"><path fill="#fff" d="M0,64 C240,120 480,0 720,48 C960,96 1200,24 1440,64 L1440,120 L0,120 Z"/></svg>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Почему с нами спокойно</h2>
+    <p class="lead">Мы сделали так, чтобы вам оставалось только наслаждаться водой.</p>
+    <div class="grid g4">
+      <div class="card"><div class="ico">🏄</div><h3>Новые доски</h3><p>Устойчивые надувные сапы, подходят даже для полного новичка.</p></div>
+      <div class="card"><div class="ico">🦺</div><h3>Безопасность</h3><p>Жилет, лиш и инструктаж на берегу входят в каждый тариф.</p></div>
+      <div class="card"><div class="ico">🎒</div><h3>Всё включено</h3><p>Весло, гермомешок для телефона и шкафчик для вещей.</p></div>
+      <div class="card"><div class="ico">📍</div><h3>Рядом с метро</h3><p>Станция в 7 минутах пешком, есть парковка и кафе.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="prices" id="prices">
+  <div class="wrap">
+    <h2>Тарифы</h2>
+    <p class="lead">Цены за одну доску. Для компаний от 4 человек — скидка 10%.</p>
+    <div class="grid g4">
+      <div class="card price">
+        <h3>Час на воде</h3>
+        <div class="sum">600 ₽</div><div class="per">за 1 час</div>
+        <ul><li>Доска, весло, жилет</li><li>Инструктаж 5 минут</li><li>Можно продлить</li></ul>
+        <a href="#booking" class="btn ghost" data-plan="hour">Выбрать</a>
+      </div>
+      <div class="card price hot">
+        <span class="tag">Популярный</span>
+        <h3>С инструктором</h3>
+        <div class="sum">1 500 ₽</div><div class="per">за 1,5 часа</div>
+        <ul><li>Урок для новичков</li><li>Прогулка по маршруту</li><li>Фото с воды</li></ul>
+        <a href="#booking" class="btn" data-plan="coach">Выбрать</a>
+      </div>
+      <div class="card price">
+        <h3>Закатный тур</h3>
+        <div class="sum">1 900 ₽</div><div class="per">за 2 часа, после 19:00</div>
+        <ul><li>Группа до 10 человек</li><li>Гид и чай на воде</li><li>Фонарик на доску</li></ul>
+        <a href="#booking" class="btn ghost" data-plan="sunset">Выбрать</a>
+      </div>
+      <div class="card price">
+        <h3>Весь день</h3>
+        <div class="sum">2 800 ₽</div><div class="per">с 8:00 до 21:00</div>
+        <ul><li>Катайтесь сколько хотите</li><li>Можно забрать с собой</li><li>Насос в комплекте</li></ul>
+        <a href="#booking" class="btn ghost" data-plan="day">Выбрать</a>
+      </div>
+    </div>
+
+    <div class="calc">
+      <div>
+        <h3>Посчитайте стоимость</h3>
+        <div class="field">
+          <label for="cPlan">Тариф</label>
+          <select id="cPlan">
+            <option value="hour">Час на воде — 600 ₽/час</option>
+            <option value="coach">С инструктором — 1 500 ₽</option>
+            <option value="sunset">Закатный тур — 1 900 ₽</option>
+            <option value="day">Весь день — 2 800 ₽</option>
+          </select>
+        </div>
+        <div class="field" id="hoursField">
+          <label for="cHours">Часов: <span id="hoursVal">2</span></label>
+          <input type="range" id="cHours" min="1" max="6" value="2">
+        </div>
+        <div class="field">
+          <label for="cBoards">Досок: <span id="boardsVal">2</span></label>
+          <input type="range" id="cBoards" min="1" max="10" value="2">
+        </div>
+      </div>
+      <div class="total">
+        <small>Итого</small>
+        <b id="total">2 400 ₽</b>
+        <div class="note" id="discount">Добавьте ещё 2 доски — и получите скидку 10%</div>
+        <a href="#booking" class="btn" id="calcBook">Забронировать</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="routes">
+  <div class="wrap">
+    <h2>Маршруты</h2>
+    <p class="lead">Выберите прогулку под настроение и уровень подготовки.</p>
+    <div class="grid g3">
+      <div class="card route">
+        <div class="pic" style="background:linear-gradient(135deg,#7fd6dc,#2bb3c0)"></div>
+        <div class="body"><h3>Тихая бухта</h3><p>Спокойная вода вдоль берега, идеально для первого раза.</p>
+          <div class="meta"><span class="pill">40 минут</span><span class="pill">Новичкам</span></div></div>
+      </div>
+      <div class="card route">
+        <div class="pic" style="background:linear-gradient(135deg,#2bb3c0,#0f6e8c)"></div>
+        <div class="body"><h3>Остров чаек</h3><p>Переход к небольшому острову с пляжем и остановкой на купание.</p>
+          <div class="meta"><span class="pill">1,5 часа</span><span class="pill">Средний</span></div></div>
+      </div>
+      <div class="card route">
+        <div class="pic" style="background:linear-gradient(135deg,#ff9f6e,#0b3a53)"></div>
+        <div class="body"><h3>Закат над озером</h3><p>Вечерняя прогулка с гидом, когда вода как зеркало.</p>
+          <div class="meta"><span class="pill">2 часа</span><span class="pill">Любой уровень</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <h2>Как это работает</h2>
+    <p class="lead">От заявки до воды — четыре простых шага.</p>
+    <div class="grid g4 steps">
+      <div class="card step"><h3>Заявка</h3><p>Оставьте заявку на сайте или позвоните нам.</p></div>
+      <div class="card step"><h3>Подтверждение</h3><p>Перезвоним в течение 15 минут и закрепим время.</p></div>
+      <div class="card step"><h3>Инструктаж</h3><p>На берегу покажем, как стоять и грести.</p></div>
+      <div class="card step"><h3>На воду!</h3><p>Катайтесь, отдыхайте и делайте красивые фото.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap" style="max-width:820px">
+    <h2>Частые вопросы</h2>
+    <p class="lead">Не нашли ответ — напишите нам, ответим быстро.</p>
+    <details><summary>Я ни разу не катался. Справлюсь?</summary><p>Да! Сапборд очень устойчивый. После короткого инструктажа большинство встаёт на доску с первой попытки.</p></details>
+    <details><summary>Нужно ли уметь плавать?</summary><p>Желательно, но все катаются в спасательных жилетах, а на воде дежурит спасатель.</p></details>
+    <details><summary>Что взять с собой?</summary><p>Купальник или спортивную одежду, полотенце, солнцезащитный крем и воду. Остальное дадим.</p></details>
+    <details><summary>Можно ли с детьми?</summary><p>Детей от 7 лет пускаем на отдельную доску со взрослым рядом, младше — вместе с родителем на одной доске.</p></details>
+    <details><summary>Что если пойдёт дождь?</summary><p>При сильном ветре или грозе перенесём бронь на любой удобный день бесплатно.</p></details>
+    <details><summary>Нужна ли предоплата?</summary><p>Нет, оплата на месте картой или наличными. Для групп от 6 человек — предоплата 30%.</p></details>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="wrap box">
+    <div class="contacts">
+      <h2>Забронировать</h2>
+      <p class="lead" style="margin-bottom:28px">Оставьте заявку — перезвоним в течение 15 минут и подтвердим время.</p>
+      <p>📍 Тихое озеро, лодочная станция №2</p>
+      <p>🕗 Ежедневно 8:00–21:00, май – сентябрь</p>
+      <p>📞 <a href="#booking">+7 (900) 000-00-00</a></p>
+      <p>✉️ <a href="#booking">hello@glad-sup.example</a></p>
+    </div>
+    <form class="form" id="form" novalidate>
+      <div id="formFields">
+        <div class="row">
+          <div class="field"><label for="fName">Имя</label><input id="fName" required placeholder="Анна"></div>
+          <div class="field"><label for="fPhone">Телефон</label><input id="fPhone" type="tel" required placeholder="+7 900 000-00-00"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="fDate">Дата</label><input id="fDate" type="date" required></div>
+          <div class="field"><label for="fBoards">Досок</label><input id="fBoards" type="number" min="1" max="20" value="1"></div>
+        </div>
+        <div class="field">
+          <label for="fPlan">Тариф</label>
+          <select id="fPlan">
+            <option value="hour">Час на воде</option>
+            <option value="coach">С инструктором</option>
+            <option value="sunset">Закатный тур</option>
+            <option value="day">Весь день</option>
+          </select>
+        </div>
+        <div class="field"><label for="fMsg">Комментарий</label><textarea id="fMsg" rows="3" placeholder="Например: катаемся впервые"></textarea></div>
+        <button class="btn" type="submit">Отправить заявку</button>
+      </div>
+      <div class="ok" id="ok"><b>🌊</b><h3>Заявка отправлена!</h3><p style="color:var(--muted);margin-top:8px">Это демо-сайт, поэтому на самом деле никто не перезвонит 🙂</p></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:#fff;letter-spacing:.08em">ГЛАДЬ</b> — прокат сапбордов<div class="disclaimer">Учебный проект. Компания, цены и контакты вымышленные.</div></div>
+    <div>© 2026</div>
+  </div>
+</footer>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const menu = $('menu');
+  $('burger').onclick = () => menu.classList.toggle('open');
+  menu.querySelectorAll('a').forEach(a => a.onclick = () => menu.classList.remove('open'));
+
+  // calculator
+  const PRICES = {hour:600, coach:1500, sunset:1900, day:2800};
+  const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
+  function calc(){
+    const plan = $('cPlan').value, h = +$('cHours').value, b = +$('cBoards').value;
+    $('hoursVal').textContent = h; $('boardsVal').textContent = b;
+    $('hoursField').style.display = plan === 'hour' ? '' : 'none';
+    let sum = PRICES[plan] * b * (plan === 'hour' ? h : 1);
+    if (b >= 4){ sum = Math.round(sum * 0.9); $('discount').textContent = 'Скидка 10% для компании уже учтена'; }
+    else $('discount').textContent = `Добавьте ещё ${4 - b} ${4 - b === 1 ? 'доску' : 'доски'} — и получите скидку 10%`;
+    $('total').textContent = fmt(sum);
+  }
+  ['cPlan','cHours','cBoards'].forEach(id => $(id).addEventListener('input', calc));
+  calc();
+  $('calcBook').onclick = () => { $('fPlan').value = $('cPlan').value; $('fBoards').value = $('cBoards').value; };
+  document.querySelectorAll('[data-plan]').forEach(a => a.addEventListener('click', () => $('fPlan').value = a.dataset.plan));
+
+  // form
+  $('fDate').min = new Date().toISOString().slice(0,10);
+  $('form').addEventListener('submit', e => {
+    e.preventDefault();
+    let valid = true;
+    ['fName','fPhone','fDate'].forEach(id => {
+      const el = $(id), bad = !el.value.trim();
+      el.style.borderColor = bad ? 'var(--coral)' : '';
+      if (bad) valid = false;
+    });
+    if (!valid) return;
+    $('formFields').style.display = 'none';
+    $('ok').style.display = 'block';
+  });
+</script>
+</body>
+</html>
